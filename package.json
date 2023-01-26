@@ -27,6 +27,7 @@
   "author": "Husam Ahmed <husam999h@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "@jest/globals": "~29.4.0",
     "@typescript-eslint/eslint-plugin": "~5.49.0",
     "@typescript-eslint/parser": "~5.49.0",
     "eslint": "~8.32.0",
