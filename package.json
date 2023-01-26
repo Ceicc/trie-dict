@@ -15,8 +15,8 @@
     "dist/**"
   ],
   "scripts": {
-    "test": "jest",
-    "lint": "eslint",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest",
+    "lint": "eslint src",
     "build": "tsc"
   },
   "keywords": [
