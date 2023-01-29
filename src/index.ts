@@ -5,42 +5,45 @@ type TrieDictConstructor = {
 	words: string[];
 };
 
+const completeWordSym = Symbol("Complete Word");
+
 type node = {
-	completeWord: boolean;
 	[k: string]: node;
+	[completeWordSym]: boolean;
 };
 
 export default function TrieDict({ words }: TrieDictConstructor) {
-	const storage: Record<string, node> = Object.create(null);
+	const storage: node = Object.create(null);
 
 	words.forEach(add);
 
 	function add(word: string) {
 		let pointer = storage;
-		// word.split("").forEach((char) => {
+
 		for (const char of word) {
 			if (Object.prototype.hasOwnProperty.call(pointer, char)) {
 				pointer = pointer[char];
 				continue;
 			}
-			pointer[char] = { completeWord: false };
+			pointer[char] = { [completeWordSym]: false };
 			pointer = pointer[char];
 		}
-		pointer.completeWord = true;
-	}
 
-	console.log(storage);
+		pointer[completeWordSym] = true;
+	}
 
 	return {
 		has(word: string) {
 			let pointer = storage;
+
 			for (const char of word) {
 				if (!Object.prototype.hasOwnProperty.call(pointer, char)) {
 					return false;
 				}
 				pointer = pointer[char];
 			}
-			return pointer.completeWord;
+
+			return pointer[completeWordSym];
 		},
 		add,
 	};
