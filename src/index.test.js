@@ -18,3 +18,9 @@ test("add words and test it", () => {
 	expect(dict.has("typescript")).toBe(true);
 	expect(dict.has("nodejs")).toBe(true);
 });
+
+test("test the remove method", () => {
+	expect(dict.remove("nodejs")).toBe(true);
+	expect(dict.remove("nodejs")).toBe(false);
+	expect(dict.has("nodejs")).toBe(false);
+});
