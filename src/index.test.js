@@ -24,3 +24,10 @@ test("test the remove method", () => {
 	expect(dict.remove("nodejs")).toBe(false);
 	expect(dict.has("nodejs")).toBe(false);
 });
+
+test("will remove fail if it's removing the only remaining word?", () => {
+	const dict = TrieDict({ words: ["test"] });
+
+	expect(dict.remove("test")).toBe(true);
+	expect(dict.has("test")).toBe(false);
+});
