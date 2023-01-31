@@ -46,5 +46,22 @@ export default function TrieDict({ words }: TrieDictConstructor) {
 			return pointer[completeWordSym];
 		},
 		add,
+		remove(word: string) {
+			let pointer = storage;
+
+			for (const char of word) {
+				if (!Object.prototype.hasOwnProperty.call(pointer, char)) {
+					return false;
+				}
+				pointer = pointer[char];
+			}
+
+			if (!pointer[completeWordSym]) {
+				return false;
+			}
+
+			pointer[completeWordSym] = false;
+			return true;
+		},
 	};
 }
