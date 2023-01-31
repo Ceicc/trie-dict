@@ -31,3 +31,11 @@ test("will remove fail if it's removing the only remaining word?", () => {
 	expect(dict.remove("test")).toBe(true);
 	expect(dict.has("test")).toBe(false);
 });
+
+test("remove function won't delete word nodes if other words depend on it", () => {
+	dict.add("daniel");
+	dict.add("danielle");
+	dict.remove("danielle");
+
+	expect(dict.has("daniel")).toBe(true);
+});
