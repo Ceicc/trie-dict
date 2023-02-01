@@ -39,3 +39,10 @@ test("remove function won't delete word nodes if other words depend on it", () =
 
 	expect(dict.has("daniel")).toBe(true);
 });
+
+test("test the startsWith method", () => {
+	expect(dict.startsWith("type")).toBe(true);
+	expect(dict.startsWith("typescript")).toBe(true);
+	expect(dict.startsWith("typescripts")).toBe(false);
+	expect(dict.startsWith("node")).toBe(false);
+});
