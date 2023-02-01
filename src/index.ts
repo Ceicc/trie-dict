@@ -91,5 +91,17 @@ export default function TrieDict({ words }: TrieDictConstructor) {
 
 			return true;
 		},
+		startsWith(initial: string) {
+			let pointer = storage;
+
+			for (const char of initial) {
+				if (!Object.prototype.hasOwnProperty.call(pointer, char)) {
+					return false;
+				}
+				pointer = pointer[char];
+			}
+
+			return pointer[completeWordSym] || Object.keys(pointer).length > 0;
+		},
 	};
 }
