@@ -1,9 +1,9 @@
 {
   "name": "trie-dict",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Dictionary storage in trie structure to allow fast search and efficient memory use",
   "type": "module",
-  "main": "./dict/index.js",
+  "main": "./dist/index.js",
   "exports": {
     ".": {
       "import": "./dist/index.js",
