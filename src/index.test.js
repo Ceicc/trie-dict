@@ -46,3 +46,9 @@ test("test the startsWith method", () => {
 	expect(dict.startsWith("typescripts")).toBe(false);
 	expect(dict.startsWith("node")).toBe(false);
 });
+
+test("Dict function initialize successfully with no option object", () => {
+	const dict = TrieDict();
+	dict.add("insensitive");
+	expect(dict.has("insensitive")).toBe(true);
+});
