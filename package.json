@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Dictionary storage in trie structure to allow fast search and efficient memory use",
   "type": "module",
-  "main": "./dict/index.js",
+  "main": "./dist/index.js",
   "exports": {
     ".": {
       "import": "./dist/index.js",
