@@ -52,3 +52,10 @@ test("Dict function initialize successfully with no option object", () => {
 	dict.add("insensitive");
 	expect(dict.has("insensitive")).toBe(true);
 });
+
+test("case insensitive dictionary", () => {
+	const dict = TrieDict({ words: ["JavaScript", "GNU"], caseSensitive: false });
+
+	expect(dict.has("gnu")).toBe(true);
+	expect(dict.startsWith("JAVA")).toBe(true);
+});
