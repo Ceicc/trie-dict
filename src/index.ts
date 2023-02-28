@@ -2,35 +2,34 @@ type TrieDictConstructor = {
 	/**
 	 * The initial words to add the Trie
 	 */
-	words: string[];
+	words?: string[];
+
+	/**
+	 * Case sensitive dictionary
+	 */
+	caseSensitive?: boolean;
 };
 
 const completeWordSym = Symbol("Complete Word");
-
-const traverse = (node: node, string: string): node | false => {
-	let pointer = node;
-
-	for (const char of string) {
-		if (!Object.prototype.hasOwnProperty.call(pointer, char)) {
-			return false;
-		}
-		pointer = pointer[char];
-	}
-
-	return pointer;
-};
 
 type node = {
 	[k: string]: node;
 	[completeWordSym]: boolean;
 };
 
-export default function TrieDict({ words }: TrieDictConstructor) {
+export default function TrieDict({
+	words = [],
+	caseSensitive = true,
+}: TrieDictConstructor = {}) {
 	const storage: node = Object.create(null);
 
 	words.forEach(add);
 
 	function add(word: string) {
+		if (!caseSensitive) {
+			word = word.toLowerCase();
+		}
+
 		let pointer = storage;
 
 		for (const char of word) {
@@ -45,6 +44,23 @@ export default function TrieDict({ words }: TrieDictConstructor) {
 		pointer[completeWordSym] = true;
 	}
 
+	const traverse = (node: node, string: string): node | false => {
+		if (!caseSensitive) {
+			string = string.toLowerCase();
+		}
+
+		let pointer = node;
+
+		for (const char of string) {
+			if (!Object.prototype.hasOwnProperty.call(pointer, char)) {
+				return false;
+			}
+			pointer = pointer[char];
+		}
+
+		return pointer;
+	};
+
 	return {
 		add,
 
@@ -54,6 +70,10 @@ export default function TrieDict({ words }: TrieDictConstructor) {
 		},
 
 		remove(word: string): boolean {
+			if (!caseSensitive) {
+				word = word.toLowerCase();
+			}
+
 			let pointer = storage;
 			const wordPath: Array<{ char: string; node: node }> = [
 				{ node: pointer, char: "" },
