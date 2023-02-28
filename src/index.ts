@@ -7,6 +7,19 @@ type TrieDictConstructor = {
 
 const completeWordSym = Symbol("Complete Word");
 
+const traverse = (node: node, string: string): node | false => {
+	let pointer = node;
+
+	for (const char of string) {
+		if (!Object.prototype.hasOwnProperty.call(pointer, char)) {
+			return false;
+		}
+		pointer = pointer[char];
+	}
+
+	return pointer;
+};
+
 type node = {
 	[k: string]: node;
 	[completeWordSym]: boolean;
@@ -33,20 +46,14 @@ export default function TrieDict({ words }: TrieDictConstructor) {
 	}
 
 	return {
-		has(word: string) {
-			let pointer = storage;
-
-			for (const char of word) {
-				if (!Object.prototype.hasOwnProperty.call(pointer, char)) {
-					return false;
-				}
-				pointer = pointer[char];
-			}
-
-			return pointer[completeWordSym];
-		},
 		add,
-		remove(word: string) {
+
+		has(word: string): boolean {
+			const pointer = traverse(storage, word);
+			return pointer && pointer[completeWordSym];
+		},
+
+		remove(word: string): boolean {
 			let pointer = storage;
 			const wordPath: Array<{ char: string; node: node }> = [
 				{ node: pointer, char: "" },
@@ -91,17 +98,12 @@ export default function TrieDict({ words }: TrieDictConstructor) {
 
 			return true;
 		},
-		startsWith(initial: string) {
-			let pointer = storage;
 
-			for (const char of initial) {
-				if (!Object.prototype.hasOwnProperty.call(pointer, char)) {
-					return false;
-				}
-				pointer = pointer[char];
-			}
-
-			return pointer[completeWordSym] || Object.keys(pointer).length > 0;
+		startsWith(initial: string): boolean {
+			const pointer = traverse(storage, initial);
+			return (
+				pointer && (pointer[completeWordSym] || Object.keys(pointer).length > 0)
+			);
 		},
 	};
 }
